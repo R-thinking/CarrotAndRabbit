@@ -1,1 +1,32 @@
+/* Global */
+:root {
+  /* Color */
+  --color-btn: #c54f1f;
+  --color-timer: #929f5d;
+  --color-score: #e4b302;
+  /* Margin */
+  --margin-small: 6px;
+  --margin-regular: 8px;
+  --margin-large: 24px;
 
+  /* Padding */
+  --padding-regular: 4px;
+  --padding-medium: 8px;
+  --padding-large: 16px;
+}
+
+/* Universal tags */
+* {
+  box-sizing: border-box;
+  padding: var(--padding-regular);
+  margin: var(--margin-small) var(--margin-regular);
+}
+
+/* Element Common Set-up */
+
+/* body */
+body {
+  position: relative;
+  font-family: "Roboto", sans-serif;
+  width: 100vw;
+}
