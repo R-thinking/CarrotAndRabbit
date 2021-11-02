@@ -13,6 +13,21 @@
   --padding-regular: 4px;
   --padding-medium: 8px;
   --padding-large: 16px;
+
+  /* Font size */
+  --font-large: 48px;
+  --font-semi-large: 32px;
+  --font-medium: 24px;
+  --font-regular: 18px;
+  --font-small: 14px;
+  --font-micro: 12px;
+
+  /* Font weight */
+  --weight-bolder: 900;
+  --weight-bold: 700;
+  --weight-semi-bold: 500;
+  --weight-regular: 400;
+  --weight-small: 300;
 }
 
 /* Universal tags */
