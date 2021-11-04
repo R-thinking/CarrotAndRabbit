@@ -158,11 +158,9 @@ button:focus {
 
 /* Game Field */
 .game__field {
-  /* position: absolute; */
+  position: relative;
   width: 65%;
   height: 47.5%;
-  background-color: blue;
-  opacity: 0.3;
 }
 
 .game__background {
@@ -182,11 +180,15 @@ section.pop-up {
   width: 500px;
   height: 180px;
   bottom: 150px;
-  display: flex;
+  /* display: flex; */
   flex-direction: column;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.4);
   border-radius: 32px;
+}
+
+.pop-up__hide {
+  display: none;
 }
 
 .pop-up__replayBtn {
