@@ -2,16 +2,84 @@
 
 const field = document.querySelector(".game__field");
 const fieldRect = field.getBoundingClientRect();
+const playBtn = document.querySelector(".game__playBtn ");
+const timer = document.querySelector(".game__timer ");
+const score = document.querySelector(".game__score ");
+const icon = document.querySelector(".game__playBtn i");
+
 const sizeofImg = 80;
+const GAME_DURATION_SEC = 10;
+
+let carrotNum = 5;
+let rabbitNum = 5;
+let started = false;
+let scoreFig = 0;
+let interval = undefined;
+let sec = 0;
+let min = 0;
 
 // main
 {
-  initGame();
+  playBtn.addEventListener("click", () => {
+    if (started) {
+      stopGame();
+    } else {
+      startGame();
+    }
+    started = !started;
+  });
 }
 
+// stopGame
+function stopGame() {}
+
+// startGame
+function startGame() {
+  initGame();
+  showStopBtn();
+  showTimerAndScore();
+  startGameTimer();
+}
+
+function showStopBtn() {
+  icon.classList.add("fa-stop");
+  icon.classList.remove("fa-play");
+}
+
+function showTimerAndScore() {
+  timer.classList.remove("hide");
+  score.classList.remove("hide");
+}
+
+function startGameTimer() {
+  let remainingTime = GAME_DURATION_SEC;
+  updateTimer(remainingTime);
+  interval = setInterval(function () {
+    if (remainingTime === 0) {
+      clearInterval(interval);
+      return;
+    } else {
+      updateTimer(--remainingTime);
+    }
+  }, 1000);
+}
+
+function updateTimer(time) {
+  const min = Math.floor(time / 60);
+  const sec = time % 60;
+  if (sec < 10) {
+    timer.innerHTML = `0${min}:0${sec}`;
+  } else {
+    timer.innerHTML = `0${min}:${sec}`;
+  }
+}
+
+// initGame
 function initGame() {
-  addItem("carrot", 5, "/imgs/Carrot.png");
-  addItem("rabbit", 5, "/imgs/Rabbit.png");
+  field.innerHTML = "";
+  score.innerText = carrotNum;
+  addItem("carrot", carrotNum, "/imgs/Carrot.png");
+  addItem("rabbit", rabbitNum, "/imgs/Rabbit.png");
 }
 
 function addItem(className, count, imgPath) {

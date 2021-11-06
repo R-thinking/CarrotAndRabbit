@@ -87,11 +87,16 @@ button:focus {
   border: none;
   outline: none;
   cursor: pointer;
-  background-color: transparent;
+  /* background-color: transparent; */
 }
 
 /* scrollbar */
 ::-webkit-scrollbar {
+  display: none;
+}
+
+/* hide */
+.hide {
   display: none;
 }
 
@@ -118,7 +123,9 @@ button:focus {
 
 .game__playBtn {
   width: 70px;
+  height: 55px;
   background-color: var(--color-btn-background);
+  color: var(--color-btn);
   border-radius: var(--size-border-radius);
   border: 3.5px solid var(--color-border);
   transition: transform var(--animation-duration) ease;
@@ -132,11 +139,11 @@ button:focus {
   font-size: 20px;
   margin-left: var(--margin-regular);
   margin-right: var(--margin-small);
-  color: var(--color-btn);
 }
 
 .game__timer {
   width: 130px;
+  height: 55px;
   text-align: center;
   background-color: var(--color-timer);
   border-radius: var(--size-border-radius);
@@ -185,10 +192,6 @@ section.pop-up {
   align-items: center;
   background-color: rgba(0, 0, 0, 0.4);
   border-radius: 32px;
-}
-
-.pop-up__hide {
-  display: none;
 }
 
 .pop-up__replayBtn {
