@@ -82,12 +82,11 @@ img {
 }
 
 /* button */
-button,
-button:focus {
+button {
   border: none;
   outline: none;
   cursor: pointer;
-  /* background-color: transparent; */
+  background-color: transparent;
 }
 
 /* scrollbar */
@@ -129,6 +128,11 @@ button:focus {
   border-radius: var(--size-border-radius);
   border: 3.5px solid var(--color-border);
   transition: transform var(--animation-duration) ease;
+}
+
+.game__playBtn.hide {
+  display: block;
+  visibility: hidden;
 }
 
 .game__playBtn:hover {
@@ -183,15 +187,19 @@ button:focus {
 
 section.pop-up {
   position: absolute;
-  left: 35%;
+  left: 34%;
   width: 500px;
   height: 180px;
-  bottom: 150px;
-  /* display: flex; */
+  bottom: 25%;
+  display: flex;
   flex-direction: column;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.4);
   border-radius: 32px;
+}
+
+.pop-up.hide {
+  display: none;
 }
 
 .pop-up__replayBtn {

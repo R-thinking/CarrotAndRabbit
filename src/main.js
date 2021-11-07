@@ -6,6 +6,9 @@ const playBtn = document.querySelector(".game__playBtn ");
 const timer = document.querySelector(".game__timer ");
 const score = document.querySelector(".game__score ");
 const icon = document.querySelector(".game__playBtn i");
+const pop_up = document.querySelector(".pop-up");
+const pop_up_message = document.querySelector(".pop-up__message");
+const pop_up_replayBtn = document.querySelector(".pop-up__replayBtn");
 
 const sizeofImg = 80;
 const GAME_DURATION_SEC = 10;
@@ -25,13 +28,32 @@ let min = 0;
       stopGame();
     } else {
       startGame();
+      started = !started;
     }
-    started = !started;
+  });
+  pop_up_replayBtn.addEventListener("click", () => {
+    ReplayGame();
   });
 }
 
 // stopGame
-function stopGame() {}
+function stopGame() {
+  hidePlayBtn();
+  stopGameTimer();
+  showPopUp("Replay?");
+}
+function hidePlayBtn() {
+  playBtn.classList.add("hide");
+}
+
+function stopGameTimer() {
+  clearInterval(interval);
+}
+
+function showPopUp(message) {
+  pop_up_message.innerText = message;
+  pop_up.classList.remove("hide");
+}
 
 // startGame
 function startGame() {
@@ -72,6 +94,19 @@ function updateTimer(time) {
   } else {
     timer.innerHTML = `0${min}:${sec}`;
   }
+}
+
+// ReplayGame
+function ReplayGame() {
+  initGame();
+  playBtn.classList.remove("hide");
+  showStopBtn();
+  startGameTimer();
+  hidePopUp();
+}
+
+function hidePopUp() {
+  pop_up.classList.add("hide");
 }
 
 // initGame
