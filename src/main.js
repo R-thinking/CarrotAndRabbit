@@ -23,6 +23,7 @@ let min = 0;
 
 // main
 {
+  // play Button
   playBtn.addEventListener("click", () => {
     if (started) {
       stopGame();
@@ -31,9 +32,14 @@ let min = 0;
       started = !started;
     }
   });
+
+  // replay button in pop up
   pop_up_replayBtn.addEventListener("click", () => {
-    ReplayGame();
+    replayGame();
   });
+
+  // carrot and rabbit
+  field.addEventListener("click", onFieldClick);
 }
 
 // stopGame
@@ -79,6 +85,7 @@ function startGameTimer() {
   interval = setInterval(function () {
     if (remainingTime === 0) {
       clearInterval(interval);
+      finishGame(false);
       return;
     } else {
       updateTimer(--remainingTime);
@@ -97,7 +104,7 @@ function updateTimer(time) {
 }
 
 // ReplayGame
-function ReplayGame() {
+function replayGame() {
   initGame();
   playBtn.classList.remove("hide");
   showStopBtn();
@@ -109,10 +116,46 @@ function hidePopUp() {
   pop_up.classList.add("hide");
 }
 
+// onFieldClick
+function onFieldClick(e) {
+  if (!started) {
+    return;
+  }
+  const target = e.target;
+  if (target.matches(".carrot")) {
+    target.remove();
+    scoreFig++;
+    updateScore();
+    if (scoreFig === carrotNum) {
+      stopGameTimer();
+      finishGame(true);
+    }
+  } else if (target.matches(".rabbit")) {
+    stopGameTimer();
+    finishGame(false);
+  }
+}
+
+function updateScore() {
+  score.innerText = carrotNum - scoreFig;
+}
+
+function finishGame(bool) {
+  hidePlayBtn();
+  let message = "";
+  if (bool) {
+    message = "You won!";
+  } else {
+    message = "You lost";
+  }
+  showPopUp(message);
+}
+
 // initGame
 function initGame() {
   field.innerHTML = "";
   score.innerText = carrotNum;
+  scoreFig = 0;
   addItem("carrot", carrotNum, "/imgs/Carrot.png");
   addItem("rabbit", rabbitNum, "/imgs/Rabbit.png");
 }

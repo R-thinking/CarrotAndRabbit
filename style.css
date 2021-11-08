@@ -183,6 +183,16 @@ button {
   z-index: -1;
 }
 
+.carrot,
+.rabbit {
+  transition: transform var(--animation-duration) ease;
+}
+
+.carrot:hover,
+.rabbit:hover {
+  transform: scale(1.1);
+}
+
 /* Pop-UP */
 
 section.pop-up {
