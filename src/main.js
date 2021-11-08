@@ -12,6 +12,11 @@ const pop_up_replayBtn = document.querySelector(".pop-up__replayBtn");
 
 const sizeofImg = 80;
 const GAME_DURATION_SEC = 10;
+const carrotSound = new Audio("./sounds/carrot_pull.mp3");
+const rabbitSound = new Audio("./sounds/rabbit_pull.wav");
+const bgSound = new Audio("./sounds/bg.mp3");
+const winSound = new Audio("./sounds/game_win.mp3");
+const alertSound = new Audio("./sounds/alert.wav");
 
 let carrotNum = 5;
 let rabbitNum = 5;
@@ -23,6 +28,7 @@ let min = 0;
 
 // main
 {
+  bgSound.loop = true;
   // play Button
   playBtn.addEventListener("click", () => {
     if (started) {
@@ -47,6 +53,8 @@ function stopGame() {
   hidePlayBtn();
   stopGameTimer();
   showPopUp("Replay?");
+  stopSound(bgSound);
+  playSound(alertSound);
 }
 function hidePlayBtn() {
   playBtn.classList.add("hide");
@@ -63,6 +71,7 @@ function showPopUp(message) {
 
 // startGame
 function startGame() {
+  playSound(bgSound);
   initGame();
   showStopBtn();
   showTimerAndScore();
@@ -110,6 +119,7 @@ function replayGame() {
   showStopBtn();
   startGameTimer();
   hidePopUp();
+  playSound(bgSound);
 }
 
 function hidePopUp() {
@@ -124,14 +134,14 @@ function onFieldClick(e) {
   const target = e.target;
   if (target.matches(".carrot")) {
     target.remove();
+    playSound(carrotSound);
     scoreFig++;
     updateScore();
     if (scoreFig === carrotNum) {
-      stopGameTimer();
       finishGame(true);
     }
   } else if (target.matches(".rabbit")) {
-    stopGameTimer();
+    playSound(rabbitSound);
     finishGame(false);
   }
 }
@@ -143,12 +153,24 @@ function updateScore() {
 function finishGame(bool) {
   hidePlayBtn();
   let message = "";
+  stopSound(bgSound);
+  stopGameTimer();
   if (bool) {
     message = "You won!";
+    playSound(winSound);
   } else {
     message = "You lost";
   }
   showPopUp(message);
+}
+
+function playSound(sound) {
+  sound.currentTime = 0;
+  sound.play();
+}
+
+function stopSound(sound) {
+  sound.pause();
 }
 
 // initGame

@@ -185,7 +185,7 @@ button {
 
 .carrot,
 .rabbit {
-  transition: transform var(--animation-duration) ease;
+  transition: transform 100ms ease-in;
 }
 
 .carrot:hover,
