@@ -1,18 +1,14 @@
 "use strict";
 import PopUp from "./popup.js";
 import Field from "./Field.js";
+import * as sound from "./sound.js";
+
 const playBtn = document.querySelector(".game__playBtn ");
 const timer = document.querySelector(".game__timer ");
 const score = document.querySelector(".game__score ");
 const icon = document.querySelector(".game__playBtn i");
 
-const sizeofImg = 80;
 const GAME_DURATION_SEC = 10;
-const carrotSound = new Audio("./sounds/carrot_pull.mp3");
-const rabbitSound = new Audio("./sounds/rabbit_pull.wav");
-const bgSound = new Audio("./sounds/bg.mp3");
-const winSound = new Audio("./sounds/game_win.mp3");
-const alertSound = new Audio("./sounds/alert.wav");
 
 let carrotNum = 5;
 let rabbitNum = 5;
@@ -27,7 +23,6 @@ const gameField = new Field(carrotNum, rabbitNum);
 
 // main
 {
-  bgSound.loop = true;
   // play Button
   playBtn.addEventListener("click", () => {
     if (started) {
@@ -66,8 +61,8 @@ function stopGame() {
   hidePlayBtn();
   stopGameTimer();
   gameFinishBanner.show("Replay?");
-  stopSound(bgSound);
-  playSound(alertSound);
+  sound.stopBg();
+  sound.playAlert();
 }
 function hidePlayBtn() {
   playBtn.classList.add("hide");
@@ -79,7 +74,7 @@ function stopGameTimer() {
 
 // startGame
 function startGame() {
-  playSound(bgSound);
+  sound.playBg();
   initGame();
   showStopBtn();
   showTimerAndScore();
@@ -126,7 +121,7 @@ function replayGame() {
   playBtn.classList.remove("hide");
   showStopBtn();
   startGameTimer();
-  playSound(bgSound);
+  sound.playBg();
 }
 
 function updateScore() {
@@ -136,29 +131,20 @@ function updateScore() {
 function finishGame(bool) {
   hidePlayBtn();
   let message = "";
-  stopSound(bgSound);
+  sound.stopBg();
   stopGameTimer();
   if (bool) {
     message = "You won!";
-    playSound(winSound);
+    sound.playWin();
   } else {
     message = "You lost";
   }
   gameFinishBanner.show(message);
 }
 
-function playSound(sound) {
-  sound.currentTime = 0;
-  sound.play();
-}
-
-function stopSound(sound) {
-  sound.pause();
-}
-
 // initGame
 function initGame() {
-  stopSound(winSound);
+  sound.stopWin();
   score.innerText = carrotNum;
   scoreFig = 0;
   gameField.init();

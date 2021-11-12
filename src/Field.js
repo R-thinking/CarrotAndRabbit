@@ -1,8 +1,7 @@
 "use strict";
+import * as sound from "./sound.js";
 
 const sizeofImg = 80;
-const carrotSound = new Audio("./sounds/carrot_pull.mp3");
-const rabbitSound = new Audio("./sounds/rabbit_pull.wav");
 
 export default class Field {
   constructor(carrotNum, rabbitNum) {
@@ -47,10 +46,10 @@ export default class Field {
     const target = event.target;
     if (target.matches(".carrot")) {
       target.remove();
-      playSound(carrotSound);
+      sound.playCarrot();
       this.onItemClick && this.onItemClick("carrot");
     } else if (target.matches(".rabbit")) {
-      playSound(rabbitSound);
+      sound.playRabbit();
       this.onItemClick && this.onItemClick("rabbit");
     }
   };
@@ -58,9 +57,4 @@ export default class Field {
 
 function randomNum(num1, num2) {
   return Math.random() * (num2 - num1) + num1;
-}
-
-function playSound(sound) {
-  sound.currentTime = 0;
-  sound.play();
 }
