@@ -1,14 +1,11 @@
 "use strict";
-
+import PopUp from "./popup.js";
 const field = document.querySelector(".game__field");
 const fieldRect = field.getBoundingClientRect();
 const playBtn = document.querySelector(".game__playBtn ");
 const timer = document.querySelector(".game__timer ");
 const score = document.querySelector(".game__score ");
 const icon = document.querySelector(".game__playBtn i");
-const pop_up = document.querySelector(".pop-up");
-const pop_up_message = document.querySelector(".pop-up__message");
-const pop_up_replayBtn = document.querySelector(".pop-up__replayBtn");
 
 const sizeofImg = 80;
 const GAME_DURATION_SEC = 10;
@@ -26,6 +23,8 @@ let interval = undefined;
 let sec = 0;
 let min = 0;
 
+const gameFinishBanner = new PopUp();
+
 // main
 {
   bgSound.loop = true;
@@ -39,8 +38,7 @@ let min = 0;
     }
   });
 
-  // replay button in pop up
-  pop_up_replayBtn.addEventListener("click", () => {
+  gameFinishBanner.setEventListener(() => {
     replayGame();
   });
 
@@ -52,7 +50,7 @@ let min = 0;
 function stopGame() {
   hidePlayBtn();
   stopGameTimer();
-  showPopUp("Replay?");
+  gameFinishBanner.show("Replay?");
   stopSound(bgSound);
   playSound(alertSound);
 }
@@ -62,11 +60,6 @@ function hidePlayBtn() {
 
 function stopGameTimer() {
   clearInterval(interval);
-}
-
-function showPopUp(message) {
-  pop_up_message.innerText = message;
-  pop_up.classList.remove("hide");
 }
 
 // startGame
@@ -118,12 +111,8 @@ function replayGame() {
   playBtn.classList.remove("hide");
   showStopBtn();
   startGameTimer();
-  hidePopUp();
+  gameFinishBanner.hide();
   playSound(bgSound);
-}
-
-function hidePopUp() {
-  pop_up.classList.add("hide");
 }
 
 // onFieldClick
@@ -161,7 +150,7 @@ function finishGame(bool) {
   } else {
     message = "You lost";
   }
-  showPopUp(message);
+  gameFinishBanner.show(message);
 }
 
 function playSound(sound) {
