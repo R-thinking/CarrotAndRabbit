@@ -1,7 +1,6 @@
 "use strict";
 import PopUp from "./popup.js";
-const field = document.querySelector(".game__field");
-const fieldRect = field.getBoundingClientRect();
+import Field from "./Field.js";
 const playBtn = document.querySelector(".game__playBtn ");
 const timer = document.querySelector(".game__timer ");
 const score = document.querySelector(".game__score ");
@@ -24,6 +23,7 @@ let sec = 0;
 let min = 0;
 
 const gameFinishBanner = new PopUp();
+const gameField = new Field(carrotNum, rabbitNum);
 
 // main
 {
@@ -43,7 +43,22 @@ const gameFinishBanner = new PopUp();
   });
 
   // carrot and rabbit
-  field.addEventListener("click", onFieldClick);
+  gameField.setClickListener(onItemClick);
+}
+// onItemClick
+function onItemClick(item) {
+  if (!started) {
+    return;
+  }
+  if (item === "carrot") {
+    scoreFig++;
+    updateScore();
+    if (scoreFig === carrotNum) {
+      finishGame(true);
+    }
+  } else if (item === "rabbit") {
+    finishGame(false);
+  }
 }
 
 // stopGame
@@ -111,28 +126,7 @@ function replayGame() {
   playBtn.classList.remove("hide");
   showStopBtn();
   startGameTimer();
-  gameFinishBanner.hide();
   playSound(bgSound);
-}
-
-// onFieldClick
-function onFieldClick(e) {
-  if (!started) {
-    return;
-  }
-  const target = e.target;
-  if (target.matches(".carrot")) {
-    target.remove();
-    playSound(carrotSound);
-    scoreFig++;
-    updateScore();
-    if (scoreFig === carrotNum) {
-      finishGame(true);
-    }
-  } else if (target.matches(".rabbit")) {
-    playSound(rabbitSound);
-    finishGame(false);
-  }
 }
 
 function updateScore() {
@@ -165,33 +159,7 @@ function stopSound(sound) {
 // initGame
 function initGame() {
   stopSound(winSound);
-  field.innerHTML = "";
   score.innerText = carrotNum;
   scoreFig = 0;
-  addItem("carrot", carrotNum, "/imgs/Carrot.png");
-  addItem("rabbit", rabbitNum, "/imgs/Rabbit.png");
-}
-
-function addItem(className, count, imgPath) {
-  const x1 = 0;
-  const y1 = 0;
-  const x2 = fieldRect.width - sizeofImg;
-  const y2 = fieldRect.height - sizeofImg;
-  for (let i = 0; i < count; i++) {
-    const item = document.createElement("img");
-    item.setAttribute("class", className);
-    item.setAttribute("src", imgPath);
-    item.style.position = "absolute";
-    item.style.width = `${sizeofImg}px`;
-    item.style.height = `${sizeofImg}px`;
-    const x = randomNum(x1, x2);
-    const y = randomNum(y1, y2);
-    item.style.left = `${x}px`;
-    item.style.top = `${y}px`;
-    field.appendChild(item);
-  }
-}
-
-function randomNum(num1, num2) {
-  return Math.random() * (num2 - num1) + num1;
+  gameField.init();
 }
