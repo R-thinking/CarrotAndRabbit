@@ -2,7 +2,33 @@
 import Field from "./field.js";
 import * as sound from "./sound.js";
 
-export default class Game {
+// Game Builder
+export default class GameBuilder {
+  setDuration(duration) {
+    this.gameDuration = duration;
+    return this;
+  }
+
+  setCarrotNum(num) {
+    this.carrotNum = num;
+    return this;
+  }
+
+  setRabbitNum(num) {
+    this.rabbitNum = num;
+    return this;
+  }
+
+  build() {
+    return new Game(
+      this.gameDuration, //
+      this.carrotNum,
+      this.rabbitNum
+    );
+  }
+}
+
+class Game {
   constructor(gameDuration, carrotNum, rabbitNum) {
     this.gameDuration = gameDuration;
     this.carrotNum = carrotNum;

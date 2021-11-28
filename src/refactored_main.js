@@ -1,13 +1,17 @@
 "use strict";
 import PopUp from "./popup.js";
-import Game from "./game.js";
+import GameBuilder from "./game.js";
 
 const GAME_DURATION_SEC = 10;
 let carrotNum = 5;
 let rabbitNum = 5;
 
 const gameFinishBanner = new PopUp();
-const game = new Game(GAME_DURATION_SEC, carrotNum, rabbitNum);
+const game = new GameBuilder()
+  .setDuration(GAME_DURATION_SEC)
+  .setCarrotNum(carrotNum)
+  .setRabbitNum(rabbitNum)
+  .build();
 
 // main
 {
@@ -29,6 +33,7 @@ const game = new Game(GAME_DURATION_SEC, carrotNum, rabbitNum);
     }
     gameFinishBanner.show(message);
   });
+
   gameFinishBanner.setEventListener(() => {
     game.replay();
   });
