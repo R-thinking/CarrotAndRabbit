@@ -3,7 +3,12 @@ import * as sound from "./sound.js";
 
 const sizeofImg = 80;
 
-export default class Field {
+export const ItemType = Object.freeze({
+  carrot: "carrot",
+  rabbit: "rabbit",
+});
+
+export class Field {
   constructor(carrotNum, rabbitNum) {
     this.carrotNum = carrotNum;
     this.rabbitNum = rabbitNum;
@@ -18,8 +23,8 @@ export default class Field {
 
   init() {
     this.field.innerHTML = "";
-    this._addItem("carrot", this.carrotNum, "/imgs/Carrot.png");
-    this._addItem("rabbit", this.rabbitNum, "/imgs/Rabbit.png");
+    this._addItem(ItemType.carrot, this.carrotNum, "/imgs/Carrot.png");
+    this._addItem(ItemType.rabbit, this.rabbitNum, "/imgs/Rabbit.png");
   }
 
   _addItem(className, count, imgPath) {
@@ -47,10 +52,10 @@ export default class Field {
     if (target.matches(".carrot")) {
       target.remove();
       sound.playCarrot();
-      this.onItemClick && this.onItemClick("carrot");
+      this.onItemClick && this.onItemClick(ItemType.carrot);
     } else if (target.matches(".rabbit")) {
       sound.playRabbit();
-      this.onItemClick && this.onItemClick("rabbit");
+      this.onItemClick && this.onItemClick(ItemType.rabbit);
     }
   };
 }
