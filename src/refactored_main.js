@@ -1,6 +1,6 @@
 "use strict";
 import PopUp from "./popup.js";
-import GameBuilder from "./game.js";
+import { GameBuilder, Reason } from "./game.js";
 
 const GAME_DURATION_SEC = 10;
 let carrotNum = 5;
@@ -19,13 +19,13 @@ const game = new GameBuilder()
     console.log(reason);
     let message = "";
     switch (reason) {
-      case "cancel":
+      case Reason.cancel:
         message = "Retry?";
         break;
-      case "win":
+      case Reason.win:
         message = "You won!";
         break;
-      case "lose":
+      case Reason.lose:
         message = "You lost!";
         break;
       default:
