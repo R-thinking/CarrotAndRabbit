@@ -48,7 +48,7 @@ class Game {
     // play Button
     this.playBtn.addEventListener("click", () => {
       if (this.started) {
-        this.stop();
+        this.stop(Reason.cancel);
       } else {
         this.start();
         this.started = !this.started;
@@ -77,10 +77,10 @@ class Game {
       this.scoreFig++;
       this.updateScore();
       if (this.scoreFig === this.carrotNum) {
-        this.finish(true);
+        this.stop(Reason.win);
       }
     } else if (item === "rabbit") {
-      this.finish(false);
+      this.stop(Reason.lose);
     }
   };
 
@@ -94,25 +94,11 @@ class Game {
   }
 
   // Stop Game
-  stop() {
+  stop(reason) {
     this.hidePlayBtn();
     this.stopGameTimer();
     sound.stopBg();
-    sound.playAlert();
-    this.onGameStop && this.onGameStop(Reason.cancel);
-  }
-
-  // Finish Game
-  finish(bool) {
-    this.hidePlayBtn();
-    sound.stopBg();
-    this.stopGameTimer();
-    if (bool) {
-      sound.playWin();
-      this.onGameStop && this.onGameStop(Reason.win);
-    } else {
-      this.onGameStop && this.onGameStop(Reason.lose);
-    }
+    this.onGameStop && this.onGameStop(reason);
   }
 
   // Replay Game
@@ -156,7 +142,9 @@ class Game {
     this.interval = setInterval(() => {
       if (remainingTime === 0) {
         clearInterval(this.interval);
-        this.finish(false);
+        this.scoreFig === this.carrotNum
+          ? this.stop(Reason.win)
+          : this.stop(Reason.lose);
         return;
       } else {
         this.updateTimer(--remainingTime);
