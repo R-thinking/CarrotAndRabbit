@@ -1,7 +1,5 @@
 # Carrot and Rabbit!(Javascript web game)
 
-<br>
-
 ## Preview
 
 <table cellspacing="0">
