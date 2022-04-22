@@ -31,12 +31,12 @@
 
 ### Game Stop
 
-<img src="/img/responsive1.png" width="768" height="550"/>
+<img src="/imgs_MD/Stop_Game.png" width="768" height="550"/>
 
 ### Game Lost
 
-<img src="/img/responsive1.png" width="768" height="550"/>
+<img src="/imgs_MD/Losing.png" width="768" height="550"/>
 
 ### Game Won
 
-<img src="/img/responsive1.png" width="768" height="550"/>
+<img src="/imgs_MD/Winning.png" width="768" height="550"/>
