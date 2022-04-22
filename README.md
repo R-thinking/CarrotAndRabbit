@@ -21,7 +21,7 @@
 - [lose](#Game-Lost): Time is up or you click a carrot by mistake. then you lose.
 - [win](#Game-Won): Congratulation! you won catching all of rabbits in time.
 
-## Primary Function
+## Primary Functions
 
 ### Game Play
 
